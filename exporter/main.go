@@ -163,7 +163,7 @@ func main() {
 	router.HandleFunc("iq", handleIq)
 	router.HandleFunc("presence", handlePresence)
 
-	go connectClient(config, router)
+	go connectClient(&config, router)
 
 	//start the watchdog
 	go watchdog.watchConnection(signals)
@@ -263,7 +263,7 @@ func postConnect(s xmpp.Sender) {
 	}
 }
 
-func connectClient(c xmpp.Config, r *xmpp.Router) {
+func connectClient(c *xmpp.Config, r *xmpp.Router) {
 	client, err := xmpp.NewClient(c, r, errorHandler)
 	if err != nil {
 		fmt.Printf("unable to create client: %s\n", err.Error())
